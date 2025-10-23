@@ -1,0 +1,136 @@
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+    //   throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+android {
+    //app签名
+    def keystoreProperties = new Properties()
+    def keystorePropertiesFile = rootProject.file('key.properties')
+    if (keystorePropertiesFile.exists()) {
+        keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+//        main {
+//            jniLibs.srcDirs = ['libs','src/main/kotlin']
+//        }
+    }
+    compileSdkVersion 31 // 30
+    ndkVersion "26.3.11579264"
+
+    lintOptions {
+        disable 'InvalidPackage'
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
+    //构建设置为Java 8
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+//    }
+
+    defaultConfig {
+        applicationId "com.njguochu.qingtongzhihe.v249"
+        minSdkVersion 23
+        targetSdkVersion 30
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+    signingConfigs {
+        release {
+            if (keystoreProperties['storeFile'] != null) {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+            }
+        }
+
+    }
+    buildTypes {
+        debug {
+            // signingConfig signingConfigs.release  // 注释掉debug的签名配置
+            minifyEnabled false
+//            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ndk {
+//                abiFilters "armeabi-v7a"
+                abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+            }
+        }
+        release {
+            signingConfig keystoreProperties['storeFile'] != null ? signingConfigs.release : null
+            minifyEnabled false
+//            useProguard false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ndk {
+//                abiFilters "armeabi-v7a"
+                abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+            }
+        }
+    }
+    packagingOptions {
+        pickFirst 'lib/x86/libc++_shared.so'
+        pickFirst 'lib/arm64-v8a/libc++_shared.so'
+        pickFirst 'lib/armeabi-v7a/libc++_shared.so'
+        pickFirst 'lib/x86_64/libc++_shared.so'
+        exclude 'META-INF/com.android.tools/proguard/coroutines.pro'
+    }
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def versionCode = defaultConfig.versionCode
+            def versionName = defaultConfig.versionName
+            def currentTime = new Date().format("yyyyMMdd-HHmmss")
+            currentTime = currentTime.replaceAll("-", "_")
+            // 设置输出文件名
+            outputFileName = "qingtongzhihe_v${versionName}_${versionCode}_${currentTime}.apk"
+        }
+    }
+
+
+}
+
+flutter {
+    source '../..'
+
+}
+
+
+dependencies {
+//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    testImplementation 'junit:junit:4.13.1'
+//    androidTestImplementation 'androidx.test:runner:1.4.0'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation 'com.github.HBiSoft:HBRecorder:3.0.1'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+}

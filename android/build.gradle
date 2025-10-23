@@ -1,0 +1,223 @@
+buildscript {
+    ext.kotlin_version = '1.6.10'
+    repositories {
+//        mavenCentral()
+//        jcenter()
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/nexus/content/groups/public/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/repository/central/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://developer.huawei.com/repo/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://repo1.maven.org/maven2/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/nexus/content/repositories/releases/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/repository/public/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/nexus/content/groups/public/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/repository/central/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/repository/google/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/repository/jcenter/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/repository/public/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url "https://maven.aliyun.com/nexus/content/groups/public/"
+//        }
+////        maven { url 'https://jitpack.io' }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://repo1.maven.org/maven2/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/nexus/content/repositories/releases/'
+//        }
+//        // 1.添加MobSDK Maven地址
+//        maven {
+//            allowInsecureProtocol = true
+//            url "https://mvn.mob.com/android"
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://oss.sonatype.org/content/repositories/snapshots/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url "https://repo.eclipse.org/content/repositories/paho-snapshots/"
+//        }
+////        maven { url 'https://jitpack.io' }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://www.jitpack.io'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url "https://maven.aliyun.com/repository/public"
+//        }
+//        mavenCentral()
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/central/'}
+
+
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+    }
+}
+
+allprojects {
+    repositories {
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/nexus/content/groups/public/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/repository/central/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://developer.huawei.com/repo/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://repo1.maven.org/maven2/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/nexus/content/repositories/releases/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/repository/public/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/nexus/content/groups/public/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/repository/central/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/repository/google/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/repository/jcenter/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/repository/public/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url "https://maven.aliyun.com/nexus/content/groups/public/"
+//        }
+////        maven { url 'https://jitpack.io' }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://repo1.maven.org/maven2/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://maven.aliyun.com/nexus/content/repositories/releases/'
+//        }
+//        // 1.添加MobSDK Maven地址
+//        maven {
+//            allowInsecureProtocol = true
+//            url "https://mvn.mob.com/android"
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://oss.sonatype.org/content/repositories/snapshots/'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url "https://repo.eclipse.org/content/repositories/paho-snapshots/"
+//        }
+////        maven { url 'https://jitpack.io' }
+//        maven {
+//            allowInsecureProtocol = true
+//            url 'https://www.jitpack.io'
+//        }
+//        maven {
+//            allowInsecureProtocol = true
+//            url "https://maven.aliyun.com/repository/public"
+//        }
+////        mavenCentral()
+//        def REPOSITORY_URL = 'https://maven.aliyun.com/repository/public'
+//        all { ArtifactRepository repo ->
+//            if(repo instanceof MavenArtifactRepository){
+//                def url = repo.url.toString()
+//                if (url.startsWith('https://dl.bintray.com') || url.startsWith('https://google.bintray.com')) {
+//                    project.logger.lifecycle "Repository ${repo.url} replaced by $REPOSITORY_URL."
+//                    remove repo
+//                }
+//            }
+//        }
+//        maven {
+//            url REPOSITORY_URL
+//        }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/central/'}
+    }
+    configurations.all {
+        resolutionStrategy {
+            force 'androidx.core:core-ktx:1.6.0'
+//            force 'androidx.core:core:1.6.0'
+        }
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
