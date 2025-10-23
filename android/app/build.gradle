@@ -55,7 +55,7 @@ android {
 //    }
 
     defaultConfig {
-        applicationId "com.njguochu.qingtongzhihe.v249"
+        applicationId "com.njguochu.qingtongzhihe"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
@@ -86,7 +86,7 @@ android {
             }
         }
         release {
-            signingConfig keystoreProperties['storeFile'] != null ? signingConfigs.release : null
+            signingConfig signingConfigs.debug  // 临时使用debug签名用于测试
             minifyEnabled false
 //            useProguard false
             shrinkResources false
