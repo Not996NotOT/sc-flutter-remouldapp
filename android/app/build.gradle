@@ -87,10 +87,10 @@ android {
         }
         release {
             signingConfig signingConfigs.debug  // 临时使用debug签名用于测试
-            minifyEnabled false
-//            useProguard false
-            shrinkResources false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled false  // 禁用代码混淆
+            useProguard false    // 禁用ProGuard
+            shrinkResources false // 禁用资源压缩
+            // proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             ndk {
 //                abiFilters "armeabi-v7a"
                 abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
