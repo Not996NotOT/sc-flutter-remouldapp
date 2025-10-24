@@ -26,14 +26,16 @@ echo "🧹 步骤1: 彻底清理所有缓存..."
 
 # 停止所有Gradle进程
 echo "停止Gradle守护进程..."
-pkill -f gradle 2>/dev/null || true
-pkill -f daemon 2>/dev/null || true
+pkill -9 -f gradle 2>/dev/null || true
+pkill -9 -f daemon 2>/dev/null || true
+pkill -9 -f GradleDaemon 2>/dev/null || true
+sleep 2
 
 # 删除Gradle缓存
 echo "删除Gradle缓存..."
-rm -rf ~/.gradle/caches/
-rm -rf ~/.gradle/daemon/
-rm -rf ~/.gradle/wrapper/
+rm -rf ~/.gradle/
+rm -rf /tmp/.gradle*
+rm -rf /var/tmp/.gradle*
 
 # 删除Android缓存
 echo "删除Android缓存..."
@@ -47,6 +49,13 @@ rm -rf android/build/
 rm -rf android/app/build/
 rm -rf build/
 
+# 重新下载Gradle Wrapper
+echo "重新下载Gradle Wrapper..."
+cd android
+rm -rf gradle/wrapper/gradle-wrapper.jar
+./gradlew wrapper --gradle-version=7.0.2 --distribution-type=all 2>/dev/null || true
+cd ..
+
 echo ""
 echo "🔄 步骤2: 重新获取依赖..."
 flutter pub get
@@ -55,8 +64,16 @@ echo ""
 echo "🏗️ 步骤3: 构建APK..."
 echo "使用Java 11构建..."
 
+# 设置Gradle环境变量
+export GRADLE_OPTS="-Dorg.gradle.java.home=$JAVA_11_HOME -Xmx2048m"
+export GRADLE_USER_HOME="$HOME/.gradle_java11"
+
+# 创建专用的Gradle目录
+mkdir -p "$GRADLE_USER_HOME"
+
 # 强制使用Java 11构建
-JAVA_HOME="$JAVA_11_HOME" flutter build apk --release --verbose
+echo "使用Java 11和专用Gradle目录构建..."
+JAVA_HOME="$JAVA_11_HOME" GRADLE_USER_HOME="$GRADLE_USER_HOME" flutter build apk --release --verbose
 
 if [ $? -eq 0 ]; then
     echo ""

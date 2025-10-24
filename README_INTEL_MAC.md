@@ -3,8 +3,9 @@
 ## 问题说明
 Intel Mac上可能存在Java版本冲突问题：
 - 系统可能有多个Java版本（Java 11, 17, 21, 23等）
-- Gradle缓存可能被高版本Java污染
+- Gradle缓存可能被高版本Java污染（major version 65错误）
 - Flutter 2.5.0需要使用兼容的Gradle版本
+- 需要彻底清理缓存并使用专用Gradle目录
 
 ## 环境要求
 - Java 11 (必须！推荐使用Oracle JDK 11.0.18)
@@ -75,8 +76,27 @@ JAVA_HOME=$(/usr/libexec/java_home -v 11) flutter build apk --release
 
 ## 常见问题
 
-### 问题1: Java版本错误
-如果遇到 `Unsupported class file major version` 错误:
+### 问题1: major version 65错误
+如果遇到 `Unsupported class file major version 65` 错误：
+
+**原因**: Gradle缓存被Java 21污染
+**解决**: 
+```bash
+# 彻底清理所有Gradle缓存
+rm -rf ~/.gradle/
+rm -rf /tmp/.gradle*
+rm -rf /var/tmp/.gradle*
+
+# 使用专用Gradle目录
+export GRADLE_USER_HOME="$HOME/.gradle_java11"
+mkdir -p "$GRADLE_USER_HOME"
+
+# 重新构建
+./clean_and_build_intel.sh
+```
+
+### 问题2: Java版本错误
+如果遇到其他 `Unsupported class file major version` 错误:
 ```bash
 # 确保使用Java 11
 export JAVA_HOME=$(/usr/libexec/java_home -v 11)
