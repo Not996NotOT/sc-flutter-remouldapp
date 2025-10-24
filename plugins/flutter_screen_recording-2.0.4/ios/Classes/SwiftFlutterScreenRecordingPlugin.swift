@@ -29,14 +29,16 @@ let screenSize = UIScreen.main.bounds
          myResult = result
          let args = call.arguments as? Dictionary<String, Any>
 
-         self.recordAudio = (args?["audio"] as? Bool)!
+         // startRecordScreen强制禁用音频
+         self.recordAudio = false
          self.nameVideo = (args?["name"] as? String)!+".mp4"
          startRecording()
 
     } else if(call.method == "startRecordScreenAndAudio"){
          myResult = result
          let args = call.arguments as? Dictionary<String, Any>
-         self.recordAudio = (args?["audio"] as? Bool)!;
+         // startRecordScreenAndAudio启用音频
+         self.recordAudio = (args?["audio"] as? Bool) ?? true;
          self.nameVideo = (args?["name"] as? String)!+".mp4"
          startRecording()
     }else if(call.method == "stopRecordScreen"){

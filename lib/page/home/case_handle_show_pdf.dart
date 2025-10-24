@@ -350,8 +350,11 @@ class _DecreaseTimeButtonState extends State<DecreaseTimeButton> {
                       // 开始录屏
                       String fileName =
                           DateTime.now().millisecondsSinceEpoch.toString();
-                      EasyLoading.show(status: "录屏即将开始");
-                      FlutterScreenRecording.startRecordScreenAndAudio(fileName)
+                       EasyLoading.show(status: "录屏准备中，请稍候...");
+                       // 延迟5秒后开始录屏，避免页面跳转冲突
+                       Future.delayed(const Duration(seconds: 5), () {
+                         EasyLoading.show(status: "录屏即将开始");
+                         FlutterScreenRecording.startRecordScreen(fileName)
                           .then((data) {
                         wjPrint("started-------$data");
                         if (data) {
@@ -375,6 +378,7 @@ class _DecreaseTimeButtonState extends State<DecreaseTimeButton> {
                             isEnable = true;
                           });
                         }
+                        });
                       });
                     } else {
                       setState(() {
@@ -415,8 +419,11 @@ class _DecreaseTimeButtonState extends State<DecreaseTimeButton> {
                       // 开始录屏
                       String fileName =
                           DateTime.now().millisecondsSinceEpoch.toString();
-                      EasyLoading.show(status: "录屏即将开始");
-                      FlutterScreenRecording.startRecordScreenAndAudio(fileName)
+                       EasyLoading.show(status: "录屏准备中，请稍候...");
+                       // 延迟5秒后开始录屏，避免页面跳转冲突
+                       Future.delayed(const Duration(seconds: 5), () {
+                         EasyLoading.show(status: "录屏即将开始");
+                         FlutterScreenRecording.startRecordScreen(fileName)
                           .then((data) {
                         wjPrint("started-------$data");
                         if (data) {
@@ -440,6 +447,7 @@ class _DecreaseTimeButtonState extends State<DecreaseTimeButton> {
                             isEnable = true;
                           });
                         }
+                        });
                       });
                     } else {
                       setState(() {
@@ -473,8 +481,11 @@ class _DecreaseTimeButtonState extends State<DecreaseTimeButton> {
                     // 开始录屏
                     String fileName =
                         DateTime.now().millisecondsSinceEpoch.toString();
-                    EasyLoading.show(status: "录屏即将开始");
-                    FlutterScreenRecording.startRecordScreenAndAudio(fileName)
+                       EasyLoading.show(status: "录屏准备中，请稍候...");
+                       // 延迟5秒后开始录屏，避免页面跳转冲突
+                       Future.delayed(const Duration(seconds: 5), () {
+                         EasyLoading.show(status: "录屏即将开始");
+                         FlutterScreenRecording.startRecordScreen(fileName)
                         .then((data) {
                       wjPrint("started-------$data");
                       if (data) {
@@ -499,7 +510,8 @@ class _DecreaseTimeButtonState extends State<DecreaseTimeButton> {
                         });
                       }
                     });
-                  } else {
+                  });
+                } else {
                     setState(() {
                       isEnable = true;
                     });

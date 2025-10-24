@@ -107,7 +107,12 @@ class FlutterScreenRecordingPlugin(
                     mMediaRecorder = MediaRecorder()
                 }
                 videoName = call.argument<String?>("name")
-                recordAudio = call.argument<Boolean?>("audio")
+                // 强制区分两个方法：startRecordScreen禁用音频，startRecordScreenAndAudio启用音频
+                recordAudio = if (call.method == "startRecordScreen") {
+                    false  // startRecordScreen强制禁用音频
+                } else {
+                    call.argument<Boolean?>("audio") ?: true  // startRecordScreenAndAudio启用音频
+                }
 
                 // 只请求权限，不立即开始录制
                 requestScreenCapturePermission()
