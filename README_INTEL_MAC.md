@@ -14,14 +14,23 @@ Intel Mac上可能存在Java版本冲突问题：
 
 ## 🚀 一键构建（推荐）
 
+### 方案A：常规构建
 ```bash
 # 切换到intel分支
 git checkout intel
 git pull origin intel
 
-# 运行一键构建脚本（自动处理所有问题）
+# 运行一键构建脚本
 ./clean_and_build_intel.sh
 ```
+
+### 方案B：强制清理构建（如果方案A失败）
+```bash
+# 强制清理所有缓存并构建
+./force_clean_intel.sh
+```
+
+**注意**: 方案B会要求sudo权限来彻底清理系统缓存
 
 ## 📋 手动构建步骤
 
@@ -76,23 +85,39 @@ JAVA_HOME=$(/usr/libexec/java_home -v 11) flutter build apk --release
 
 ## 常见问题
 
-### 问题1: major version 65错误
+### 问题1: major version 65错误（最常见）
 如果遇到 `Unsupported class file major version 65` 错误：
 
-**原因**: Gradle缓存被Java 21污染
-**解决**: 
-```bash
-# 彻底清理所有Gradle缓存
-rm -rf ~/.gradle/
-rm -rf /tmp/.gradle*
-rm -rf /var/tmp/.gradle*
+**原因**: Gradle缓存被Java 21污染，Flutter工具仍使用系统默认Gradle目录
 
-# 使用专用Gradle目录
-export GRADLE_USER_HOME="$HOME/.gradle_java11"
-mkdir -p "$GRADLE_USER_HOME"
+**解决方案（按顺序尝试）**:
+
+**方案1**: 使用强制清理脚本
+```bash
+./force_clean_intel.sh
+```
+
+**方案2**: 手动彻底清理
+```bash
+# 停止所有Java进程
+sudo pkill -9 -f java
+sudo pkill -9 -f gradle
+
+# 删除所有Gradle缓存
+sudo rm -rf ~/.gradle/
+sudo rm -rf /tmp/.gradle*
+sudo rm -rf /var/tmp/.gradle*
 
 # 重新构建
 ./clean_and_build_intel.sh
+```
+
+**方案3**: 直接使用Gradle构建
+```bash
+cd android
+export JAVA_HOME=$(/usr/libexec/java_home -v 11)
+./gradlew clean
+./gradlew assembleRelease --no-daemon
 ```
 
 ### 问题2: Java版本错误
