@@ -351,8 +351,10 @@ class _DecreaseTimeButtonState extends State<DecreaseTimeButton> {
                       String fileName =
                           DateTime.now().millisecondsSinceEpoch.toString();
                        EasyLoading.show(status: "录屏准备中，请稍候...");
-                       // 延迟5秒后开始录屏，避免页面跳转冲突
-                       Future.delayed(const Duration(seconds: 5), () {
+                       print("=== 开始10秒延迟等待 ===");
+                       // 延迟10秒后开始录屏，避免页面跳转冲突
+                       Future.delayed(const Duration(seconds: 10), () {
+                         print("=== 10秒延迟结束，开始录屏 ===");
                          EasyLoading.show(status: "录屏即将开始");
                          FlutterScreenRecording.startRecordScreen(fileName)
                           .then((data) {
@@ -420,8 +422,10 @@ class _DecreaseTimeButtonState extends State<DecreaseTimeButton> {
                       String fileName =
                           DateTime.now().millisecondsSinceEpoch.toString();
                        EasyLoading.show(status: "录屏准备中，请稍候...");
-                       // 延迟5秒后开始录屏，避免页面跳转冲突
-                       Future.delayed(const Duration(seconds: 5), () {
+                       print("=== 开始10秒延迟等待 ===");
+                       // 延迟10秒后开始录屏，避免页面跳转冲突
+                       Future.delayed(const Duration(seconds: 10), () {
+                         print("=== 10秒延迟结束，开始录屏 ===");
                          EasyLoading.show(status: "录屏即将开始");
                          FlutterScreenRecording.startRecordScreen(fileName)
                           .then((data) {
@@ -482,8 +486,10 @@ class _DecreaseTimeButtonState extends State<DecreaseTimeButton> {
                     String fileName =
                         DateTime.now().millisecondsSinceEpoch.toString();
                        EasyLoading.show(status: "录屏准备中，请稍候...");
-                       // 延迟5秒后开始录屏，避免页面跳转冲突
-                       Future.delayed(const Duration(seconds: 5), () {
+                       print("=== 开始10秒延迟等待 ===");
+                       // 延迟10秒后开始录屏，避免页面跳转冲突
+                       Future.delayed(const Duration(seconds: 10), () {
+                         print("=== 10秒延迟结束，开始录屏 ===");
                          EasyLoading.show(status: "录屏即将开始");
                          FlutterScreenRecording.startRecordScreen(fileName)
                         .then((data) {

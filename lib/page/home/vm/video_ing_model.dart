@@ -1178,7 +1178,8 @@ class VideoIngViewModel extends SingleViewStateModel with ClientCallback {
     trtcCloud.registerListener(onRtcListener);
     // 进房
     enterRoom();
-    await trtcCloud.startLocalAudio(TRTCCloudDef.TRTC_AUDIO_QUALITY_SPEECH);
+    // 使用默认模式，采样率48kHz，适合音视频通话场景，减少加速问题
+    await trtcCloud.startLocalAudio(TRTCCloudDef.TRTC_AUDIO_QUALITY_DEFAULT);
   }
 
   // 进入房间
@@ -1219,26 +1220,37 @@ class VideoIngViewModel extends SingleViewStateModel with ClientCallback {
 
   ///开启当前界面录屏功能
   _startShareFunction() {
-    if (Platform.isAndroid) {
-      trtcCloud.startScreenCapture(
-          TRTCCloudDef.TRTC_VIDEO_STREAM_TYPE_SUB,
-          TRTCVideoEncParam());
-    } else if (Platform.isIOS) {
-      // trtcCloud.stopLocalPreview();
-      // sleep(Duration(seconds: 5));
-      trtcCloud.startScreenCapture(
-        TRTCCloudDef.TRTC_VIDEO_STREAM_TYPE_SUB,
-        TRTCVideoEncParam(),
+    print("=== TRTC进房成功，延迟10秒后开始屏幕分享 ===");
+    // 延迟5秒后开始屏幕分享，避免音频冲突
+    Future.delayed(const Duration(seconds: 5), () {
+      print("=== TRTC延迟结束，开始屏幕分享 ===");
+      // 配置屏幕分享参数，优化录制和通话稳定性
+      TRTCVideoEncParam screenParam = TRTCVideoEncParam(
+        videoBitrate: 1000,        // 适中的码率，保证稳定性
+        videoResolution: TRTCCloudDef.TRTC_VIDEO_RESOLUTION_640_360, // 640x360分辨率，适合屏幕分享
+        videoResolutionMode: TRTCCloudDef.TRTC_VIDEO_RESOLUTION_MODE_PORTRAIT, // 竖屏模式
+        videoFps: 15,              // 15fps帧率，流畅且不过载
+        minVideoBitrate: 600,      // 最小码率
+        enableAdjustRes: true      // 启用自动分辨率调整，根据网络情况智能调整
       );
-      // sleep(Duration(seconds: 1));
-      // userList.add({
-      //   'userId': userViewModel.idCard,
-      //   "widget": addRoom(true, true, userViewModel.idCard)
-      // });
-      // trtcCloud.startLocalPreview(true,);
-      // 'group.com.guochu.sharevideo'
-      // ReplayKitLauncher.launchReplayKitBroadcast("GuoChuVideoShare");
-    }
+      
+      if (Platform.isAndroid) {
+        // Android端屏幕分享，保持通话音频
+        trtcCloud.startScreenCapture(
+            TRTCCloudDef.TRTC_VIDEO_STREAM_TYPE_SUB,
+            screenParam);
+      } else if (Platform.isIOS) {
+        // iOS端屏幕分享，保持通话音频
+        trtcCloud.startScreenCapture(
+          TRTCCloudDef.TRTC_VIDEO_STREAM_TYPE_SUB,
+          screenParam,
+        );
+        // 'group.com.guochu.sharevideo'
+        // ReplayKitLauncher.launchReplayKitBroadcast("GuoChuVideoShare");
+      }
+      
+      print("=== TRTC屏幕分享已启动，保持通话音频 ===");
+    });
   }
 
   /// 事件回调

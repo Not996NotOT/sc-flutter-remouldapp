@@ -111,9 +111,10 @@ class NotaryExtractViewModel extends SingleViewStateModel {
         timer1?.cancel();
         timer2?.cancel();
         if (!isUpload) {
-          FlutterScreenRecording.stopRecordScreen;
-          G.getCurrentState().pushNamedAndRemoveUntil(
-              RoutePaths.judicialExpertiseList, (route) => false);
+          FlutterScreenRecording.stopRecordScreen.then((value) {
+            G.getCurrentState().pushNamedAndRemoveUntil(
+                RoutePaths.judicialExpertiseList, (route) => false);
+          });
         }
       } else {
         timerTotal--;
