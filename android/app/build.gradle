@@ -42,7 +42,7 @@ android {
     compileSdk 34
     ndkVersion "26.3.11579264"
 
-    lintOptions {
+    lint {
         disable 'InvalidPackage'
         abortOnError false
         checkReleaseBuilds false
@@ -92,7 +92,6 @@ android {
         release {
             signingConfig signingConfigs.debug  // 临时使用debug签名用于测试
             minifyEnabled false  // 禁用代码混淆
-            useProguard false    // 禁用ProGuard
             shrinkResources false // 禁用资源压缩
             // proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             ndk {
